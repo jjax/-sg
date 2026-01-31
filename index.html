@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>バイブコーディング入門 - イチから学べるガイド</title>
+  <style>
+    :root {
+      --primary: #6c5ce7;
+      --primary-light: #a29bfe;
+      --accent: #00cec9;
+      --bg: #0a0a1a;
+      --bg-card: #12122a;
+      --bg-card-hover: #1a1a3e;
+      --text: #e0e0f0;
+      --text-muted: #8888aa;
+      --border: #2a2a4a;
+      --success: #00b894;
+      --warning: #fdcb6e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background: radial-gradient(ellipse at 50% 0%, #1a1a4a 0%, var(--bg) 70%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(108,92,231,0.15) 0%, transparent 70%);
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary-light), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(108,92,231,0.4);
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(10,10,26,0.9);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary-light);
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    .nav-links { display: flex; align-items: center; }
+
+    /* Sections */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section {
+      padding: 5rem 0;
+    }
+
+    section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--primary-light);
+    }
+
+    section h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin: 2rem 0 0.75rem;
+      color: var(--accent);
+    }
+
+    section p, section li {
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* What is section */
+    .what-is {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-top: 2rem;
+      border: 1px solid var(--border);
+    }
+
+    .what-is blockquote {
+      border-left: 4px solid var(--accent);
+      padding-left: 1.25rem;
+      margin: 1.5rem 0;
+      font-style: italic;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* Steps */
+    .steps {
+      counter-reset: step;
+    }
+
+    .step {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 2.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .step:hover {
+      border-color: var(--primary);
+      background: var(--bg-card-hover);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: 'STEP ' counter(step);
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+
+    .step h3 {
+      margin-top: 0;
+    }
+
+    /* Code blocks */
+    .code-block {
+      background: #0d0d20;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+      font-family: 'SFMono-Regular', 'Fira Code', monospace;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: #c8c8e8;
+    }
+
+    .code-block .comment { color: #5a5a8a; }
+    .code-block .keyword { color: var(--primary-light); }
+    .code-block .string { color: var(--accent); }
+    .code-block .prompt-label {
+      color: var(--warning);
+      font-weight: 600;
+    }
+
+    /* Tips */
+    .tip {
+      background: rgba(0,206,201,0.08);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .tip-title {
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .warning {
+      background: rgba(253,203,110,0.08);
+      border-left: 4px solid var(--warning);
+      border-radius: 0 12px 12px 0;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .warning-title {
+      font-weight: 700;
+      color: var(--warning);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Tools grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.3s, transform 0.2s;
+    }
+
+    .tool-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .tool-card h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-light);
+    }
+
+    .tool-card .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+      background: rgba(108,92,231,0.2);
+      color: var(--primary-light);
+      margin-bottom: 0.75rem;
+    }
+
+    .tool-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Comparison table */
+    .comparison {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+
+    .comparison th, .comparison td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison th {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .comparison td { color: var(--text); }
+    .comparison tr:hover td { background: rgba(108,92,231,0.05); }
+
+    /* FAQ */
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .faq-item summary {
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-item summary::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--primary-light);
+      transition: transform 0.2s;
+    }
+
+    .faq-item[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-item .faq-body {
+      padding: 0 1.5rem 1.25rem;
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .step { padding: 1.5rem; }
+      .what-is { padding: 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 3rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="logo">Vibe Coding Lab</span>
+    <div class="nav-links">
+      <a href="#what">バイブコーディングとは</a>
+      <a href="#start">はじめ方</a>
+      <a href="#tools">ツール</a>
+      <a href="#practice">実践</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1>バイブコーディング入門</h1>
+  <p>AIに「やりたいこと」を伝えるだけでソフトウェアが作れる。プログラミング経験ゼロからでも始められる、新しいものづくりのガイド。</p>
+  <a href="#what" class="cta-btn">学びをはじめる</a>
+</header>
+
+<main>
+
+  <!-- What is Vibe Coding -->
+  <section id="what">
+    <div class="container">
+      <h2>バイブコーディングとは？</h2>
+      <div class="what-is">
+        <blockquote>
+          「コードを書くのではなく、"雰囲気(vibe)" で伝えてAIに作ってもらう。」<br>
+          — Andrej Karpathy（元Tesla AI責任者）が2025年に提唱
+        </blockquote>
+        <p>
+          バイブコーディング（Vibe Coding）とは、<strong>自然言語（日本語でOK）でAIに指示を出し、プログラムを自動生成してもらう開発スタイル</strong>です。
+          従来のプログラミングのように文法やアルゴリズムを覚える必要はなく、「何を作りたいか」を言葉で伝えることが最も重要なスキルになります。
+        </p>
+
+        <h3>従来のプログラミングとの違い</h3>
+        <table class="comparison">
+          <thead>
+            <tr>
+              <th></th>
+              <th>従来のプログラミング</th>
+              <th>バイブコーディング</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>必要な知識</td>
+              <td>プログラミング言語の文法・アルゴリズム</td>
+              <td>作りたいものを言語化する力</td>
+            </tr>
+            <tr>
+              <td>作業内容</td>
+              <td>コードを一行ずつ書く</td>
+              <td>AIに指示を出し、結果を確認する</td>
+            </tr>
+            <tr>
+              <td>デバッグ</td>
+              <td>エラーを読んで自分で修正</td>
+              <td>エラーをAIに貼り付けて修正してもらう</td>
+            </tr>
+            <tr>
+              <td>学習コスト</td>
+              <td>高い（数ヶ月〜数年）</td>
+              <td>低い（今日から始められる）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Tools -->
+  <section id="tools">
+    <div class="container">
+      <h2>使えるツール</h2>
+      <p>バイブコーディングに対応した主要ツールを紹介します。まずは1つ選んで試してみましょう。</p>
+
+      <div class="tools-grid">
+        <div class="tool-card">
+          <h4>Claude Code</h4>
+          <span class="tag">CLI / ターミナル</span>
+          <p>Anthropic製。ターミナル上でプロジェクト全体をAIが把握し、ファイル作成・編集・実行まで自律的に行う。</p>
+        </div>
+        <div class="tool-card">
+          <h4>Cursor</h4>
+          <span class="tag">エディタ / IDE</span>
+          <p>AI搭載コードエディタ。VS Codeベースで、チャットしながらコードを書ける。初心者に人気。</p>
+        </div>
+        <div class="tool-card">
+          <h4>GitHub Copilot</h4>
+          <span class="tag">エディタ拡張</span>
+          <p>VS Code等で使えるAI補完。エージェントモードで指示ベースの開発も可能に。</p>
+        </div>
+        <div class="tool-card">
+          <h4>Bolt / Lovable</h4>
+          <span class="tag">ブラウザ完結</span>
+          <p>ブラウザ上で指示するだけでWebアプリが生成される。環境構築不要で最も手軽。</p>
+        </div>
+        <div class="tool-card">
+          <h4>Replit Agent</h4>
+          <span class="tag">ブラウザ完結</span>
+          <p>オンライン開発環境。自然言語で指示するとアプリを自動構築し、そのままデプロイできる。</p>
+        </div>
+        <div class="tool-card">
+          <h4>v0 by Vercel</h4>
+          <span class="tag">UI生成特化</span>
+          <p>UIデザインを言葉で伝えると、React/Tailwindのコンポーネントを生成。フロントエンド特化。</p>
+        </div>
+      </div>
+
+      <div class="tip">
+        <div class="tip-title">初心者におすすめ</div>
+        <p>環境構築なしで始められる <strong>Bolt</strong> や <strong>Replit Agent</strong> がおすすめです。慣れてきたら <strong>Cursor</strong> や <strong>Claude Code</strong> にステップアップしましょう。</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Getting Started -->
+  <section id="start">
+    <div class="container">
+      <h2>はじめ方 — 5つのステップ</h2>
+      <p>実際にバイブコーディングで何かを作る流れを、順を追って解説します。</p>
+
+      <div class="steps">
+
+        <div class="step">
+          <h3>作りたいものを決める</h3>
+          <p>最初は小さなものでOKです。例：</p>
+          <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+            <li>じゃんけんゲーム</li>
+            <li>ToDoリストアプリ</li>
+            <li>自己紹介ページ</li>
+            <li>カウントダウンタイマー</li>
+          </ul>
+          <p>完成形を頭の中でイメージできていると、AIへの指示がブレにくくなります。</p>
+        </div>
+
+        <div class="step">
+          <h3>ツールを準備する</h3>
+          <p>一番手軽な方法として、ブラウザで <strong>Bolt.new</strong> を開くだけでOKです。アカウント登録すればすぐ使えます。</p>
+          <p>ローカル環境を使いたい場合は、Cursorをダウンロードしてインストールしましょう。</p>
+        </div>
+
+        <div class="step">
+          <h3>AIに最初の指示を出す</h3>
+          <p>「プロンプト」と呼ばれる指示文をAIに送ります。<strong>日本語で具体的に書く</strong>のがコツです。</p>
+          <div class="code-block">
+            <span class="prompt-label">あなたの指示:</span><br><br>
+            <span class="string">じゃんけんゲームをHTMLとJavaScriptで作ってください。</span><br>
+            <span class="string">- グー・チョキ・パーのボタンが3つある</span><br>
+            <span class="string">- ボタンを押すとコンピュータの手がランダムで決まる</span><br>
+            <span class="string">- 勝ち・負け・あいこの結果が画面に表示される</span><br>
+            <span class="string">- 勝敗の回数をカウントして表示する</span><br>
+            <span class="string">- デザインはシンプルでかわいい感じにする</span>
+          </div>
+          <div class="tip">
+            <div class="tip-title">良い指示のコツ</div>
+            <p>「何が」「どう動いて」「どう見えるか」を箇条書きで伝えると、AIが正確に理解してくれます。曖昧な指示は曖昧な結果を生みます。</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <h3>生成結果を確認し、修正を依頼する</h3>
+          <p>AIが生成したコードを動かしてみましょう。思った通りでなければ、<strong>追加の指示</strong>を出して修正してもらいます。</p>
+          <div class="code-block">
+            <span class="prompt-label">修正の指示（例）:</span><br><br>
+            <span class="string">いい感じです！以下を修正してください：</span><br>
+            <span class="string">- ボタンをもう少し大きくして、間隔を空ける</span><br>
+            <span class="string">- 結果表示にアニメーションをつける</span><br>
+            <span class="string">- リセットボタンを追加する</span>
+          </div>
+          <p>この「指示 → 確認 → 修正」のサイクルを繰り返して完成度を上げていきます。これがバイブコーディングの基本ループです。</p>
+        </div>
+
+        <div class="step">
+          <h3>完成・公開する</h3>
+          <p>満足できる形になったら公開しましょう。BoltやReplitならワンクリックでデプロイ可能です。Vercel や Netlify を使えば無料でWebサイトとして公開できます。</p>
+          <div class="warning">
+            <div class="warning-title">注意</div>
+            <p>AIが生成したコードは必ずしも完璧ではありません。公開前にセキュリティ面（個人情報の取り扱いなど）を確認しましょう。本番サービスとして運用する場合は、コードレビューを受けることをおすすめします。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Practice -->
+  <section id="practice">
+    <div class="container">
+      <h2>プロンプトの実践テクニック</h2>
+
+      <h3>1. 役割を与える</h3>
+      <div class="code-block">
+        <span class="string">あなたは経験豊富なフロントエンドエンジニアです。</span><br>
+        <span class="string">以下の要件でReactアプリを作ってください。</span>
+      </div>
+
+      <h3>2. 段階的に指示する</h3>
+      <p>一度に全部を頼むのではなく、機能ごとに分けて依頼すると精度が上がります。</p>
+      <div class="code-block">
+        <span class="comment">// まず土台を作ってもらう</span><br>
+        <span class="string">「まずシンプルなToDoリストの基本機能だけ作って」</span><br><br>
+        <span class="comment">// 次に機能を追加</span><br>
+        <span class="string">「完了したタスクを取り消し線で表示する機能を追加して」</span><br><br>
+        <span class="comment">// さらにデザインを調整</span><br>
+        <span class="string">「全体をダークモードのデザインに変更して」</span>
+      </div>
+
+      <h3>3. エラーはそのまま貼る</h3>
+      <p>エラーが出たら、エラーメッセージをそのままAIに貼り付けましょう。自分で解読する必要はありません。</p>
+      <div class="code-block">
+        <span class="prompt-label">あなた:</span><br>
+        <span class="string">以下のエラーが出ました。修正してください。</span><br><br>
+        <span style="color: #ff6b6b;">TypeError: Cannot read properties of undefined (reading 'map')</span><br>
+        <span style="color: #ff6b6b;">  at App.jsx:15:22</span>
+      </div>
+
+      <h3>4. 参考イメージを伝える</h3>
+      <p>「〇〇みたいなデザイン」「△△のような動き」と既存サービスを参考に伝えると、AIが意図を汲み取りやすくなります。</p>
+      <div class="code-block">
+        <span class="string">Notionのようなシンプルでクリーンなデザインで、</span><br>
+        <span class="string">左側にサイドバー、右側にメインコンテンツという</span><br>
+        <span class="string">レイアウトにしてください。</span>
+      </div>
+
+      <h3>5. コンテキストを維持する</h3>
+      <p>長い会話では、AIが以前の文脈を忘れることがあります。重要な前提は適宜繰り返しましょう。</p>
+      <div class="tip">
+        <div class="tip-title">上級テクニック</div>
+        <p>プロジェクトのルールや設計方針をまとめたファイル（例：CONVENTIONS.md）を用意し、AIに毎回読み込ませると一貫性のある出力が得られます。Claude Codeでは<code>CLAUDE.md</code>ファイルがこの役割を果たします。</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <h2>よくある質問</h2>
+
+      <details class="faq-item">
+        <summary>プログラミングの知識がゼロでも大丈夫？</summary>
+        <div class="faq-body">
+          <p>はい、大丈夫です。バイブコーディングの本質は「AIに伝える力」なので、コードが読めなくても始められます。ただし、続けていくうちに基礎知識があると修正指示の精度が上がるため、少しずつ学んでいくとより効果的です。</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>無料で使えるツールはある？</summary>
+        <div class="faq-body">
+          <p>あります。Bolt.newは無料枠があり、Replit Agentも無料プランがあります。Cursorも無料で始められます。本格的に使い込む場合は有料プラン（月$20前後）が必要になることが多いです。</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>バイブコーディングで作れないものは？</summary>
+        <div class="faq-body">
+          <p>現状では、大規模で複雑なシステム（銀行の基幹システム等）や、高いパフォーマンスが必要なもの（ゲームエンジン等）は難しいです。一方で、Webアプリ、モバイルアプリ、自動化スクリプト、データ分析ツールなどは十分作れます。</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>AIが間違ったコードを書いたらどうする？</summary>
+        <div class="faq-body">
+          <p>エラーメッセージをそのままAIに貼り付けて修正を依頼してください。それでも直らない場合は、別のアプローチを提案してもらうか、会話をリセットして最初からやり直すと解決することが多いです。</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>バイブコーディングを学ぶとプログラマーになれる？</summary>
+        <div class="faq-body">
+          <p>バイブコーディングは「ものを作る力」を身につける入口として最適です。そこからプログラミングの基礎を学んでいけば、プロの開発者を目指すことも十分可能です。まずは作る楽しさを体験し、必要に応じて知識を深めていくのがおすすめです。</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>作ったものを商用利用していい？</summary>
+        <div class="faq-body">
+          <p>基本的にはAIが生成したコードの商用利用は可能ですが、利用するAIツールの利用規約を必ず確認してください。また、生成されたコードが既存のオープンソースライセンスに抵触しないかも注意が必要です。</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>Vibe Coding Lab — バイブコーディングをイチから学べるガイド</p>
+  </div>
+</footer>
+
+</body>
+</html>
