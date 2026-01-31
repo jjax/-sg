@@ -4,864 +4,909 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>バイブコーディング入門 - イチから学べるガイド</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DotGothic16&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --neon-pink: #ff2d95;
-      --neon-cyan: #0ff;
-      --neon-yellow: #ffe600;
-      --neon-green: #39ff14;
-      --neon-orange: #ff6600;
-      --bg: #0a0014;
-      --bg-card: #110022;
-      --bg-card-hover: #1a0033;
-      --text: #e0d0ff;
-      --text-muted: #9980cc;
-      --border: #3a1a6a;
-    }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'DotGothic16', 'MS Gothic', monospace;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 2;
+      font-family: 'MS PGothic', 'MS Gothic', 'Hiragino Kaku Gothic Pro', 'Osaka', sans-serif;
+      background: #000011;
+      color: #ffffff;
+      line-height: 1.8;
       position: relative;
+      overflow-x: hidden;
     }
 
-    /* CRT scanline overlay */
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(0,0,0,0.15) 0px,
-        rgba(0,0,0,0.15) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    /* Grid background */
+    /* Starry background */
     body::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background:
-        linear-gradient(rgba(255,45,149,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,45,149,0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
+        radial-gradient(1px 1px at 10% 20%, #fff, transparent),
+        radial-gradient(1px 1px at 30% 70%, #fff, transparent),
+        radial-gradient(1px 1px at 50% 10%, #fff, transparent),
+        radial-gradient(1px 1px at 70% 40%, #fff, transparent),
+        radial-gradient(1px 1px at 90% 80%, #fff, transparent),
+        radial-gradient(1px 1px at 15% 90%, #fff, transparent),
+        radial-gradient(1px 1px at 85% 15%, #fff, transparent),
+        radial-gradient(1px 1px at 45% 55%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 25% 35%, #aaf, transparent),
+        radial-gradient(1.5px 1.5px at 65% 85%, #ffa, transparent),
+        radial-gradient(1.5px 1.5px at 80% 50%, #aff, transparent),
+        radial-gradient(1px 1px at 5% 50%, #fff, transparent),
+        radial-gradient(1px 1px at 55% 30%, #fff, transparent),
+        radial-gradient(1px 1px at 35% 5%, #fff, transparent),
+        radial-gradient(1px 1px at 75% 65%, #fff, transparent),
+        radial-gradient(1px 1px at 95% 25%, #fff, transparent),
+        radial-gradient(1px 1px at 20% 80%, #fff, transparent),
+        radial-gradient(1px 1px at 60% 95%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 40% 45%, #faf, transparent),
+        radial-gradient(1px 1px at 88% 72%, #fff, transparent),
+        radial-gradient(1px 1px at 12% 58%, #fff, transparent),
+        radial-gradient(1px 1px at 42% 82%, #fff, transparent),
+        radial-gradient(1px 1px at 72% 12%, #fff, transparent),
+        radial-gradient(1px 1px at 33% 92%, #fff, transparent),
+        radial-gradient(1px 1px at 67% 28%, #fff, transparent);
       pointer-events: none;
-      z-index: -1;
+      z-index: 0;
     }
 
-    /* Neon text glow utility */
-    .glow-pink { color: var(--neon-pink); text-shadow: 0 0 7px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink); }
-    .glow-cyan { color: var(--neon-cyan); text-shadow: 0 0 7px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan); }
-    .glow-yellow { color: var(--neon-yellow); text-shadow: 0 0 7px var(--neon-yellow), 0 0 20px var(--neon-yellow); }
-    .glow-green { color: var(--neon-green); text-shadow: 0 0 7px var(--neon-green), 0 0 20px var(--neon-green); }
-
-    /* Hero */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      background:
-        radial-gradient(ellipse at 50% 80%, rgba(255,45,149,0.12) 0%, transparent 60%),
-        radial-gradient(ellipse at 20% 20%, rgba(0,255,255,0.08) 0%, transparent 50%),
-        var(--bg);
+    body > * {
       position: relative;
+      z-index: 1;
+    }
+
+    a { color: #00ffff; }
+    a:visited { color: #ff88ff; }
+    a:hover { color: #ffff00; }
+
+    /* Rainbow text */
+    .rainbow {
+      background: linear-gradient(90deg, #ff0000, #ff8800, #ffff00, #00ff00, #0088ff, #8800ff, #ff0088);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Marquee style animation */
+    .marquee-wrap {
       overflow: hidden;
+      background: linear-gradient(90deg, #ff0000, #ff8800, #ffff00, #00ff00, #00ffff, #0088ff, #ff00ff);
+      padding: 2px 0;
     }
 
-    /* Retro sun */
-    .hero::before {
-      content: '';
-      position: absolute;
-      width: 400px;
-      height: 400px;
-      background: linear-gradient(180deg, var(--neon-yellow) 0%, var(--neon-pink) 50%, transparent 50%);
-      border-radius: 50%;
-      bottom: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0.15;
-      pointer-events: none;
-    }
-
-    /* Horizon grid lines */
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 40%;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 18px,
-          rgba(255,45,149,0.15) 18px,
-          rgba(255,45,149,0.15) 19px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          transparent,
-          transparent 60px,
-          rgba(0,255,255,0.08) 60px,
-          rgba(0,255,255,0.08) 61px
-        );
-      transform: perspective(200px) rotateX(40deg);
-      transform-origin: bottom;
-      pointer-events: none;
-    }
-
-    .hero h1 {
-      font-family: 'Press Start 2P', monospace;
-      font-size: clamp(1.5rem, 5vw, 3rem);
-      color: var(--neon-cyan);
-      text-shadow:
-        0 0 10px var(--neon-cyan),
-        0 0 30px var(--neon-cyan),
-        0 0 60px var(--neon-cyan),
-        0 0 100px rgba(0,255,255,0.3);
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.05em;
-      position: relative;
-      z-index: 1;
-      animation: flicker 4s infinite;
-    }
-
-    @keyframes flicker {
-      0%, 95%, 100% { opacity: 1; }
-      96% { opacity: 0.8; }
-      97% { opacity: 1; }
-      98% { opacity: 0.7; }
-      99% { opacity: 1; }
-    }
-
-    .hero .subtitle {
-      font-size: 1rem;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin-bottom: 2.5rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .cta-btn {
-      font-family: 'Press Start 2P', monospace;
+    .marquee-inner {
       display: inline-block;
-      padding: 1rem 2rem;
-      background: transparent;
-      color: var(--neon-pink);
-      text-decoration: none;
-      border: 3px solid var(--neon-pink);
-      font-size: 0.85rem;
-      transition: all 0.3s;
-      position: relative;
-      z-index: 1;
-      text-shadow: 0 0 10px var(--neon-pink);
-      box-shadow: 0 0 10px var(--neon-pink), inset 0 0 10px rgba(255,45,149,0.1);
-    }
-
-    .cta-btn:hover {
-      background: var(--neon-pink);
+      white-space: nowrap;
+      animation: marquee 20s linear infinite;
       color: #000;
-      text-shadow: none;
-      box-shadow: 0 0 30px var(--neon-pink), 0 0 60px rgba(255,45,149,0.3);
+      font-weight: bold;
+      font-size: 0.85rem;
+      padding: 2px 0;
     }
 
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(10,0,20,0.92);
-      z-index: 1000;
-      border-bottom: 2px solid var(--neon-pink);
-      box-shadow: 0 2px 20px rgba(255,45,149,0.3);
+    @keyframes marquee {
+      0% { transform: translateX(100vw); }
+      100% { transform: translateX(-200%); }
     }
 
-    nav .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0.6rem 1.5rem;
+    /* Header */
+    .site-header {
+      text-align: center;
+      padding: 1rem;
+      border-bottom: 3px solid #ff00ff;
+    }
+
+    .site-header .update-info {
+      color: #00ff00;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .site-header h1 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 900;
+      margin: 0.5rem 0;
+      letter-spacing: 0.05em;
+    }
+
+    .star-deco {
+      color: #ffff00;
+      text-shadow: 0 0 10px #ffff00;
+      animation: twinkle 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes twinkle2 {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    /* Pink banner */
+    .pink-banner {
+      background: #ff00ff;
+      color: #ffff00;
+      text-align: center;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      font-weight: 900;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem 0;
+      text-shadow: 2px 2px 0 #880088;
+      border: 3px ridge #ff88ff;
+    }
+
+    .cyan-banner {
+      background: #00cccc;
+      color: #000;
+      text-align: center;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: 900;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem 0;
+      border: 3px ridge #88ffff;
+    }
+
+    .green-banner {
+      background: #00aa00;
+      color: #ffff00;
+      text-align: center;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: 900;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem 0;
+      border: 3px ridge #88ff88;
+    }
+
+    .red-banner {
+      background: #cc0000;
+      color: #ffffff;
+      text-align: center;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: 900;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem 0;
+      border: 3px ridge #ff8888;
+    }
+
+    /* Main layout - table style */
+    .main-layout {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0.5rem auto;
+      gap: 4px;
     }
 
-    nav .logo {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.7rem;
-      color: var(--neon-cyan);
-      text-shadow: 0 0 10px var(--neon-cyan);
+    .sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      background: #000033;
+      border: 2px solid #0000ff;
+      padding: 0;
     }
 
-    nav a {
-      color: var(--neon-pink);
+    .sidebar-title {
+      background: #000088;
+      color: #ffffff;
+      text-align: center;
+      font-weight: bold;
+      padding: 0.5rem;
+      border-bottom: 2px solid #0000ff;
+      font-size: 0.95rem;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0.5rem;
+    }
+
+    .sidebar li {
+      padding: 0.3rem 0;
+      border-bottom: 1px dotted #333366;
+    }
+
+    .sidebar li::before {
+      content: '\00bb ';
+      color: #ff8800;
+      font-weight: bold;
+    }
+
+    .sidebar a {
+      color: #00ff00;
       text-decoration: none;
-      margin-left: 1.5rem;
-      font-size: 0.85rem;
-      transition: all 0.2s;
-      text-shadow: 0 0 5px rgba(255,45,149,0.5);
+      font-size: 0.9rem;
     }
 
-    nav a:hover {
-      color: var(--neon-cyan);
-      text-shadow: 0 0 10px var(--neon-cyan);
+    .sidebar a:hover {
+      color: #ffff00;
+      text-decoration: underline;
     }
 
-    .nav-links { display: flex; align-items: center; }
-
-    /* Sections */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
+    .main-content {
+      flex: 1;
+      min-width: 0;
     }
 
-    section {
-      padding: 5rem 0;
+    /* Content sections */
+    .content-box {
+      border: 2px solid #ff00ff;
+      margin: 0.5rem 0;
+      background: rgba(0,0,0,0.7);
     }
 
-    section h2 {
-      font-family: 'Press Start 2P', monospace;
-      font-size: clamp(1rem, 3vw, 1.4rem);
-      margin-bottom: 1.5rem;
-      color: var(--neon-pink);
-      text-shadow: 0 0 10px var(--neon-pink), 0 0 30px var(--neon-pink);
-      line-height: 2.2;
+    .content-box-title {
+      background: linear-gradient(90deg, #ff00ff, #ff0088, #ff00ff);
+      color: #ffff00;
+      font-weight: 900;
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      text-shadow: 1px 1px 0 #880000;
     }
 
-    section h3 {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.85rem;
-      margin: 2.5rem 0 1rem;
-      color: var(--neon-cyan);
-      text-shadow: 0 0 8px var(--neon-cyan);
-      line-height: 2;
+    .content-box-body {
+      padding: 1rem;
     }
 
-    section p, section li {
-      color: var(--text);
-      margin-bottom: 0.75rem;
+    .content-box-blue {
+      border: 2px solid #0088ff;
     }
 
-    .divider {
+    .content-box-blue .content-box-title {
+      background: linear-gradient(90deg, #0044cc, #0088ff, #0044cc);
+      color: #ffffff;
+    }
+
+    .content-box-green {
+      border: 2px solid #00cc00;
+    }
+
+    .content-box-green .content-box-title {
+      background: linear-gradient(90deg, #006600, #00cc00, #006600);
+      color: #ffff00;
+    }
+
+    .content-box-red {
+      border: 2px solid #ff0000;
+    }
+
+    .content-box-red .content-box-title {
+      background: linear-gradient(90deg, #990000, #ff0000, #990000);
+      color: #ffffff;
+    }
+
+    /* Text colors */
+    .text-yellow { color: #ffff00; }
+    .text-cyan { color: #00ffff; }
+    .text-green { color: #00ff00; }
+    .text-pink { color: #ff88ff; }
+    .text-red { color: #ff0000; }
+    .text-orange { color: #ff8800; }
+    .text-white { color: #ffffff; }
+
+    .text-big { font-size: 1.3rem; font-weight: bold; }
+    .text-huge { font-size: 1.6rem; font-weight: 900; }
+
+    /* Blink */
+    @keyframes blink-anim {
+      0%, 100% { visibility: visible; }
+      50% { visibility: hidden; }
+    }
+    .blink { animation: blink-anim 1s step-end infinite; }
+
+    /* HR styles */
+    hr.rainbow-hr {
       border: none;
-      border-top: 2px dashed var(--border);
-      margin: 0;
-      opacity: 0.5;
+      height: 4px;
+      background: linear-gradient(90deg, #ff0000, #ff8800, #ffff00, #00ff00, #00ffff, #0088ff, #ff00ff);
+      margin: 0.5rem 0;
     }
 
-    /* What is section */
-    .what-is {
-      background: var(--bg-card);
-      padding: 2.5rem;
-      margin-top: 2rem;
-      border: 2px solid var(--neon-pink);
-      box-shadow: 0 0 15px rgba(255,45,149,0.2), inset 0 0 30px rgba(255,45,149,0.03);
+    hr.dot-hr {
+      border: none;
+      border-top: 2px dotted #ff00ff;
+      margin: 0.5rem 0;
     }
 
-    .what-is blockquote {
-      border-left: 4px solid var(--neon-yellow);
-      padding-left: 1.25rem;
-      margin: 1.5rem 0;
-      font-style: italic;
-      color: var(--neon-yellow);
-      text-shadow: 0 0 5px rgba(255,230,0,0.3);
-      font-size: 1rem;
+    /* Table - comparison */
+    .retro-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 3px ridge #888;
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .retro-table th {
+      background: #000088;
+      color: #ffff00;
+      border: 2px ridge #888;
+      padding: 0.5rem;
+      font-weight: bold;
+    }
+
+    .retro-table td {
+      background: #000033;
+      color: #ffffff;
+      border: 2px ridge #888;
+      padding: 0.5rem;
+    }
+
+    .retro-table tr:hover td {
+      background: #000066;
     }
 
     /* Steps */
-    .steps {
-      counter-reset: step;
-    }
-
-    .step {
-      background: var(--bg-card);
-      border: 2px solid var(--border);
-      padding: 2rem 2.5rem;
-      margin-bottom: 2rem;
-      position: relative;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-
-    .step:hover {
-      border-color: var(--neon-cyan);
-      box-shadow: 0 0 20px rgba(0,255,255,0.15);
-    }
-
-    .step::before {
-      counter-increment: step;
-      content: '[ STEP ' counter(step) ' ]';
-      font-family: 'Press Start 2P', monospace;
+    .step-number {
       display: inline-block;
-      font-size: 0.6rem;
-      color: var(--neon-green);
-      text-shadow: 0 0 8px var(--neon-green);
-      padding: 0.4rem 0.75rem;
-      border: 1px solid var(--neon-green);
-      box-shadow: 0 0 8px rgba(57,255,20,0.2);
-      margin-bottom: 1rem;
+      background: #ff0000;
+      color: #ffff00;
+      font-weight: 900;
+      font-size: 1.1rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      line-height: 2.2rem;
+      text-align: center;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      text-shadow: 1px 1px 0 #880000;
     }
 
-    .step h3 {
-      margin-top: 0;
+    .step-title {
+      color: #ffff00;
+      font-size: 1.2rem;
+      font-weight: 900;
+      text-shadow: 1px 1px 0 #888800;
     }
 
-    /* Code blocks */
-    .code-block {
-      background: #060010;
-      border: 1px solid var(--neon-green);
-      box-shadow: 0 0 8px rgba(57,255,20,0.15);
-      padding: 1.25rem 1.5rem;
-      margin: 1rem 0;
-      overflow-x: auto;
-      font-family: 'Press Start 2P', 'Courier New', monospace;
-      font-size: 0.65rem;
-      line-height: 2.5;
-      color: var(--neon-green);
-      text-shadow: 0 0 5px rgba(57,255,20,0.4);
+    .step-box {
+      border: 2px dashed #ff8800;
+      padding: 1rem;
+      margin: 0.75rem 0;
+      background: rgba(50,30,0,0.4);
     }
 
-    .code-block .comment { color: #555; text-shadow: none; }
-    .code-block .keyword { color: var(--neon-cyan); text-shadow: 0 0 5px rgba(0,255,255,0.3); }
-    .code-block .string { color: var(--neon-green); }
-    .code-block .prompt-label {
-      color: var(--neon-yellow);
-      text-shadow: 0 0 5px rgba(255,230,0,0.4);
-    }
-
-    /* Tips */
-    .tip {
-      background: rgba(0,255,255,0.05);
-      border: 1px solid var(--neon-cyan);
-      box-shadow: 0 0 10px rgba(0,255,255,0.1);
-      padding: 1.25rem 1.5rem;
-      margin: 1.5rem 0;
-    }
-
-    .tip-title {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.6rem;
-      color: var(--neon-cyan);
-      text-shadow: 0 0 8px var(--neon-cyan);
-      margin-bottom: 0.75rem;
-    }
-
-    .warning {
-      background: rgba(255,102,0,0.05);
-      border: 1px solid var(--neon-orange);
-      box-shadow: 0 0 10px rgba(255,102,0,0.1);
-      padding: 1.25rem 1.5rem;
-      margin: 1.5rem 0;
-    }
-
-    .warning-title {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.6rem;
-      color: var(--neon-orange);
-      text-shadow: 0 0 8px var(--neon-orange);
-      margin-bottom: 0.75rem;
-    }
-
-    /* Tools grid */
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.25rem;
-      margin-top: 1.5rem;
-    }
-
-    .tool-card {
-      background: var(--bg-card);
-      border: 2px solid var(--border);
-      padding: 1.5rem;
-      transition: all 0.3s;
-    }
-
-    .tool-card:hover {
-      border-color: var(--neon-pink);
-      box-shadow: 0 0 20px rgba(255,45,149,0.2);
-    }
-
-    .tool-card h4 {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.65rem;
-      margin-bottom: 0.75rem;
-      color: var(--neon-cyan);
-      text-shadow: 0 0 8px var(--neon-cyan);
-      line-height: 2;
-    }
-
-    .tool-card .tag {
-      display: inline-block;
-      font-size: 0.75rem;
-      padding: 0.2rem 0.6rem;
-      border: 1px solid var(--neon-pink);
-      color: var(--neon-pink);
-      margin-bottom: 0.75rem;
-      text-shadow: 0 0 5px rgba(255,45,149,0.3);
-    }
-
-    .tool-card p {
+    /* Code / prompt box */
+    .prompt-box {
+      background: #001100;
+      border: 2px solid #00ff00;
+      padding: 1rem;
+      margin: 0.75rem 0;
+      font-family: 'MS Gothic', 'Courier New', monospace;
       font-size: 0.9rem;
-      color: var(--text-muted);
+      color: #00ff00;
     }
 
-    /* Comparison table */
-    .comparison {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1.5rem 0;
-      font-size: 0.9rem;
+    .prompt-box .prompt-label {
+      color: #ffff00;
+      font-weight: bold;
     }
 
-    .comparison th, .comparison td {
+    .prompt-box .error-text {
+      color: #ff0000;
+    }
+
+    /* Tip box */
+    .tip-box {
+      background: #001133;
+      border: 2px double #00ffff;
       padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+    }
+
+    .tip-box-title {
+      color: #00ffff;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .warning-box {
+      background: #331100;
+      border: 2px double #ff8800;
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+    }
+
+    .warning-box-title {
+      color: #ff8800;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    /* Tool cards grid */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 6px;
+      margin: 0.75rem 0;
+    }
+
+    .tool-item {
+      border: 2px solid;
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .tool-item:nth-child(1) { border-color: #ff0000; background: rgba(100,0,0,0.4); }
+    .tool-item:nth-child(2) { border-color: #ff8800; background: rgba(80,50,0,0.4); }
+    .tool-item:nth-child(3) { border-color: #ffff00; background: rgba(80,80,0,0.3); }
+    .tool-item:nth-child(4) { border-color: #00ff00; background: rgba(0,80,0,0.3); }
+    .tool-item:nth-child(5) { border-color: #00ffff; background: rgba(0,80,80,0.3); }
+    .tool-item:nth-child(6) { border-color: #ff00ff; background: rgba(80,0,80,0.3); }
+
+    .tool-item h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .tool-item:nth-child(1) h4 { color: #ff4444; }
+    .tool-item:nth-child(2) h4 { color: #ffaa44; }
+    .tool-item:nth-child(3) h4 { color: #ffff44; }
+    .tool-item:nth-child(4) h4 { color: #44ff44; }
+    .tool-item:nth-child(5) h4 { color: #44ffff; }
+    .tool-item:nth-child(6) h4 { color: #ff44ff; }
+
+    .tool-tag {
+      display: inline-block;
+      background: #ff00ff;
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 1px 6px;
+      margin-bottom: 0.3rem;
+    }
+
+    .tool-item p {
+      font-size: 0.85rem;
+      color: #cccccc;
       text-align: left;
-      border-bottom: 1px solid var(--border);
     }
-
-    .comparison th {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.55rem;
-      color: var(--neon-yellow);
-      text-shadow: 0 0 5px rgba(255,230,0,0.3);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      line-height: 2.5;
-    }
-
-    .comparison td { color: var(--text); }
-    .comparison tr:hover td { background: rgba(255,45,149,0.05); }
 
     /* FAQ */
     .faq-item {
-      background: var(--bg-card);
-      border: 2px solid var(--border);
-      margin-bottom: 1rem;
-      overflow: hidden;
+      border: 1px solid #ff00ff;
+      margin-bottom: 4px;
+      background: rgba(40,0,40,0.5);
     }
 
     .faq-item summary {
-      padding: 1.25rem 1.5rem;
+      padding: 0.75rem 1rem;
       cursor: pointer;
-      font-weight: 600;
-      color: var(--text);
+      color: #00ffff;
+      font-weight: bold;
       list-style: none;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: color 0.2s;
     }
 
-    .faq-item summary:hover {
-      color: var(--neon-cyan);
+    .faq-item summary::before {
+      content: '\25b6 ';
+      color: #ff00ff;
     }
 
-    .faq-item summary::after {
-      content: '>';
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.7rem;
-      color: var(--neon-pink);
-      text-shadow: 0 0 5px var(--neon-pink);
-      transition: transform 0.2s;
+    .faq-item[open] summary::before {
+      content: '\25bc ';
     }
 
-    .faq-item[open] summary::after {
-      transform: rotate(90deg);
+    .faq-item[open] summary {
+      background: #220033;
+      border-bottom: 1px solid #ff00ff;
     }
 
-    .faq-item[open] {
-      border-color: var(--neon-pink);
-      box-shadow: 0 0 10px rgba(255,45,149,0.15);
-    }
-
-    .faq-item .faq-body {
-      padding: 0 1.5rem 1.25rem;
-      color: var(--text-muted);
+    .faq-body {
+      padding: 0.75rem 1rem;
+      color: #cccccc;
     }
 
     /* Footer */
     footer {
       text-align: center;
-      padding: 3rem 1.5rem;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      border-top: 2px solid var(--border);
+      padding: 1rem;
+      border-top: 3px solid #ff00ff;
+      margin-top: 1rem;
     }
 
-    footer .footer-art {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.5rem;
-      color: var(--neon-pink);
-      text-shadow: 0 0 5px var(--neon-pink);
-      margin-bottom: 1rem;
-      line-height: 1.4;
+    .counter-img {
+      display: inline-block;
+      background: #000;
+      border: 2px inset #888;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      font-size: 1.2rem;
+      padding: 0.2rem 0.75rem;
       letter-spacing: 0.2em;
+      margin: 0.5rem 0;
     }
 
-    /* Smooth scroll */
-    html { scroll-behavior: smooth; }
-
-    /* Blinking cursor */
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+    /* Under construction */
+    .under-construction {
+      text-align: center;
+      margin: 0.5rem 0;
+      color: #ffff00;
+      font-size: 0.9rem;
+      animation: blink-anim 1.5s step-end infinite;
     }
 
-    .cursor-blink::after {
-      content: '_';
-      animation: blink 1s step-end infinite;
-      color: var(--neon-green);
+    /* Arrow decorations */
+    .arrow-deco {
+      color: #ff00ff;
+      font-weight: bold;
     }
-
-    /* Selection */
-    ::selection {
-      background: var(--neon-pink);
-      color: #000;
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--neon-pink); }
 
     /* Responsive */
-    @media (max-width: 640px) {
-      .step { padding: 1.5rem; }
-      .what-is { padding: 1.5rem; }
-      .nav-links { display: none; }
-      section { padding: 3rem 0; }
-      .code-block { font-size: 0.55rem; }
+    @media (max-width: 768px) {
+      .main-layout {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+      }
     }
+
+    html { scroll-behavior: smooth; }
   </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <span class="logo">VIBE CODING LAB</span>
-    <div class="nav-links">
-      <a href="#what">バイブコーディングとは</a>
-      <a href="#start">はじめ方</a>
-      <a href="#tools">ツール</a>
-      <a href="#practice">実践</a>
-      <a href="#faq">FAQ</a>
+<!-- Rainbow marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    &diams; ようこそ！バイブコーディング入門へ！ &diams; AIに話しかけるだけでプログラムが作れる時代が来ました！ &diams; プログラミング経験ゼロでもOK！ &diams; さあ、始めよう！ &diams; Welcome to Vibe Coding Lab!! &diams;
+  </div>
+</div>
+
+<!-- Header -->
+<div class="site-header">
+  <div class="update-info">&diams;最終更新日 2026/1/31 &nbsp; VIBE CODING LAB &nbsp; Direct Web Site Regular update</div>
+  <h1 class="rainbow">ようこそバイブコーディング入門へ</h1>
+  <hr class="rainbow-hr">
+  <div class="pink-banner">
+    <span class="star-deco">&starf;</span>
+    AIに話すだけでプログラムが作れる！
+    <span class="star-deco">&starf;</span>
+  </div>
+  <p style="font-size:1.1rem;">
+    <span class="text-cyan">プログラミング経験</span><span class="text-yellow text-big">ゼロ</span><span class="text-cyan">からでも始められる、新しいものづくりのガイド</span>
+  </p>
+</div>
+
+<hr class="rainbow-hr">
+
+<!-- Main layout -->
+<div class="main-layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-title">&#x1F4CB; 目次ナビ</div>
+    <ul>
+      <li><a href="#what">バイブコーディングとは</a></li>
+      <li><a href="#tools">使えるツール紹介</a></li>
+      <li><a href="#start">はじめ方5ステップ</a></li>
+      <li><a href="#practice">実践テクニック</a></li>
+      <li><a href="#faq">よくある質問</a></li>
+    </ul>
+    <hr class="dot-hr">
+    <div style="padding: 0.5rem; text-align: center;">
+      <span class="text-pink" style="font-size: 0.8rem;">
+        &laquo; おすすめリンク &raquo;
+      </span>
+    </div>
+    <ul>
+      <li><a href="#tools">Cursor</a></li>
+      <li><a href="#tools">Claude Code</a></li>
+      <li><a href="#tools">Bolt.new</a></li>
+      <li><a href="#tools">Replit Agent</a></li>
+      <li><a href="#tools">GitHub Copilot</a></li>
+      <li><a href="#tools">v0 by Vercel</a></li>
+    </ul>
+    <hr class="dot-hr">
+    <div class="under-construction">
+      &#x1F6A7; 随時更新中！ &#x1F6A7;
     </div>
   </div>
-</nav>
 
-<header class="hero">
-  <h1>バイブコーディング入門</h1>
-  <p class="subtitle">AIに「やりたいこと」を伝えるだけでソフトウェアが作れる。<br>プログラミング経験ゼロからでも始められる、新しいものづくりのガイド。</p>
-  <a href="#what" class="cta-btn">&gt; START LEARNING _</a>
-</header>
+  <!-- Main content -->
+  <div class="main-content">
 
-<main>
-
-  <!-- What is Vibe Coding -->
-  <section id="what">
-    <div class="container">
-      <h2>&gt; バイブコーディングとは？</h2>
-      <div class="what-is">
-        <blockquote>
-          「コードを書くのではなく、"雰囲気(vibe)" で伝えてAIに作ってもらう。」<br>
-          — Andrej Karpathy（元Tesla AI責任者）が2025年に提唱
-        </blockquote>
-        <p>
-          バイブコーディング（Vibe Coding）とは、<strong style="color:var(--neon-cyan);">自然言語（日本語でOK）でAIに指示を出し、プログラムを自動生成してもらう開発スタイル</strong>です。
-          従来のプログラミングのように文法やアルゴリズムを覚える必要はなく、「何を作りたいか」を言葉で伝えることが最も重要なスキルになります。
-        </p>
-
-        <h3>&gt; 従来のプログラミングとの違い</h3>
-        <table class="comparison">
-          <thead>
-            <tr>
-              <th></th>
-              <th>従来のプログラミング</th>
-              <th>バイブコーディング</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>必要な知識</td>
-              <td>プログラミング言語の文法・アルゴリズム</td>
-              <td>作りたいものを言語化する力</td>
-            </tr>
-            <tr>
-              <td>作業内容</td>
-              <td>コードを一行ずつ書く</td>
-              <td>AIに指示を出し、結果を確認する</td>
-            </tr>
-            <tr>
-              <td>デバッグ</td>
-              <td>エラーを読んで自分で修正</td>
-              <td>エラーをAIに貼り付けて修正してもらう</td>
-            </tr>
-            <tr>
-              <td>学習コスト</td>
-              <td>高い（数ヶ月〜数年）</td>
-              <td>低い（今日から始められる）</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- Tools -->
-  <section id="tools">
-    <div class="container">
-      <h2>&gt; 使えるツール</h2>
-      <p>バイブコーディングに対応した主要ツールを紹介します。まずは1つ選んで試してみましょう。</p>
-
-      <div class="tools-grid">
-        <div class="tool-card">
-          <h4>Claude Code</h4>
-          <span class="tag">CLI / ターミナル</span>
-          <p>Anthropic製。ターミナル上でプロジェクト全体をAIが把握し、ファイル作成・編集・実行まで自律的に行う。</p>
-        </div>
-        <div class="tool-card">
-          <h4>Cursor</h4>
-          <span class="tag">エディタ / IDE</span>
-          <p>AI搭載コードエディタ。VS Codeベースで、チャットしながらコードを書ける。初心者に人気。</p>
-        </div>
-        <div class="tool-card">
-          <h4>GitHub Copilot</h4>
-          <span class="tag">エディタ拡張</span>
-          <p>VS Code等で使えるAI補完。エージェントモードで指示ベースの開発も可能に。</p>
-        </div>
-        <div class="tool-card">
-          <h4>Bolt / Lovable</h4>
-          <span class="tag">ブラウザ完結</span>
-          <p>ブラウザ上で指示するだけでWebアプリが生成される。環境構築不要で最も手軽。</p>
-        </div>
-        <div class="tool-card">
-          <h4>Replit Agent</h4>
-          <span class="tag">ブラウザ完結</span>
-          <p>オンライン開発環境。自然言語で指示するとアプリを自動構築し、そのままデプロイできる。</p>
-        </div>
-        <div class="tool-card">
-          <h4>v0 by Vercel</h4>
-          <span class="tag">UI生成特化</span>
-          <p>UIデザインを言葉で伝えると、React/Tailwindのコンポーネントを生成。フロントエンド特化。</p>
-        </div>
-      </div>
-
-      <div class="tip">
-        <div class="tip-title">&gt; TIP: 初心者におすすめ</div>
-        <p>環境構築なしで始められる <strong style="color:var(--neon-cyan);">Bolt</strong> や <strong style="color:var(--neon-cyan);">Replit Agent</strong> がおすすめです。慣れてきたら <strong style="color:var(--neon-cyan);">Cursor</strong> や <strong style="color:var(--neon-cyan);">Claude Code</strong> にステップアップしましょう。</p>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- Getting Started -->
-  <section id="start">
-    <div class="container">
-      <h2>&gt; はじめ方 — 5つのステップ</h2>
-      <p>実際にバイブコーディングで何かを作る流れを、順を追って解説します。</p>
-
-      <div class="steps">
-
-        <div class="step">
-          <h3>作りたいものを決める</h3>
-          <p>最初は小さなものでOKです。例：</p>
-          <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-            <li>じゃんけんゲーム</li>
-            <li>ToDoリストアプリ</li>
-            <li>自己紹介ページ</li>
-            <li>カウントダウンタイマー</li>
-          </ul>
-          <p>完成形を頭の中でイメージできていると、AIへの指示がブレにくくなります。</p>
-        </div>
-
-        <div class="step">
-          <h3>ツールを準備する</h3>
-          <p>一番手軽な方法として、ブラウザで <strong style="color:var(--neon-cyan);">Bolt.new</strong> を開くだけでOKです。アカウント登録すればすぐ使えます。</p>
-          <p>ローカル環境を使いたい場合は、Cursorをダウンロードしてインストールしましょう。</p>
-        </div>
-
-        <div class="step">
-          <h3>AIに最初の指示を出す</h3>
-          <p>「プロンプト」と呼ばれる指示文をAIに送ります。<strong style="color:var(--neon-pink);">日本語で具体的に書く</strong>のがコツです。</p>
-          <div class="code-block">
-            <span class="prompt-label">&gt; YOUR PROMPT:</span><br><br>
-            <span class="string">じゃんけんゲームをHTMLとJavaScriptで作ってください。</span><br>
-            <span class="string">- グー・チョキ・パーのボタンが3つある</span><br>
-            <span class="string">- ボタンを押すとコンピュータの手がランダムで決まる</span><br>
-            <span class="string">- 勝ち・負け・あいこの結果が画面に表示される</span><br>
-            <span class="string">- 勝敗の回数をカウントして表示する</span><br>
-            <span class="string">- デザインはシンプルでかわいい感じにする</span>
+    <!-- What is Vibe Coding -->
+    <section id="what">
+      <div class="content-box">
+        <div class="content-box-title"><span class="arrow-deco">&raquo;</span> バイブコーディングとは？ <span class="arrow-deco">&laquo;</span></div>
+        <div class="content-box-body">
+          <div style="border-left: 4px solid #ffff00; padding-left: 1rem; margin: 0.5rem 0; background: rgba(80,80,0,0.2);">
+            <p class="text-yellow" style="font-style: italic; font-size: 1.05rem;">
+              「コードを書くのではなく、"雰囲気(vibe)" で伝えてAIに作ってもらう。」<br>
+              <span class="text-pink">— Andrej Karpathy（元Tesla AI責任者）が2025年に提唱</span>
+            </p>
           </div>
-          <div class="tip">
-            <div class="tip-title">&gt; TIP: 良い指示のコツ</div>
-            <p>「何が」「どう動いて」「どう見えるか」を箇条書きで伝えると、AIが正確に理解してくれます。曖昧な指示は曖昧な結果を生みます。</p>
+          <p>
+            バイブコーディング（Vibe Coding）とは、<span class="text-cyan text-big">自然言語（日本語でOK）でAIに指示を出し、プログラムを自動生成してもらう開発スタイル</span>です。
+            従来のプログラミングのように文法やアルゴリズムを覚える必要はなく、<span class="text-yellow">「何を作りたいか」を言葉で伝えることが最も重要なスキル</span>になります。
+          </p>
+
+          <div class="cyan-banner"><span class="arrow-deco" style="color:#000;">&raquo;</span> 従来のプログラミングとの違い <span class="arrow-deco" style="color:#000;">&laquo;</span></div>
+
+          <table class="retro-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>従来のプログラミング</th>
+                <th>バイブコーディング</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-orange"><b>必要な知識</b></td>
+                <td>プログラミング言語の文法・アルゴリズム</td>
+                <td class="text-green">作りたいものを言語化する力</td>
+              </tr>
+              <tr>
+                <td class="text-orange"><b>作業内容</b></td>
+                <td>コードを一行ずつ書く</td>
+                <td class="text-green">AIに指示を出し、結果を確認する</td>
+              </tr>
+              <tr>
+                <td class="text-orange"><b>デバッグ</b></td>
+                <td>エラーを読んで自分で修正</td>
+                <td class="text-green">エラーをAIに貼り付けて修正してもらう</td>
+              </tr>
+              <tr>
+                <td class="text-orange"><b>学習コスト</b></td>
+                <td>高い（数ヶ月〜数年）</td>
+                <td class="text-green"><b>低い（今日から始められる）</b></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rainbow-hr">
+
+    <!-- Tools -->
+    <section id="tools">
+      <div class="content-box content-box-blue">
+        <div class="content-box-title" style="background: linear-gradient(90deg, #0044cc, #0088ff, #0044cc); color: #fff;"><span class="arrow-deco" style="color:#ffff00;">&raquo;</span> 使えるツール紹介 <span class="arrow-deco" style="color:#ffff00;">&laquo;</span></div>
+        <div class="content-box-body">
+          <p>バイブコーディングに対応した主要ツールを紹介します。<span class="text-yellow">まずは1つ選んで試してみましょう！</span></p>
+
+          <div class="tool-grid">
+            <div class="tool-item">
+              <h4>Claude Code</h4>
+              <span class="tool-tag">CLI / ターミナル</span>
+              <p>Anthropic製。ターミナル上でプロジェクト全体をAIが把握し、ファイル作成・編集・実行まで自律的に行う。</p>
+            </div>
+            <div class="tool-item">
+              <h4>Cursor</h4>
+              <span class="tool-tag" style="background:#ff8800;">エディタ / IDE</span>
+              <p>AI搭載コードエディタ。VS Codeベースで、チャットしながらコードを書ける。初心者に人気。</p>
+            </div>
+            <div class="tool-item">
+              <h4>GitHub Copilot</h4>
+              <span class="tool-tag" style="background:#888800;">エディタ拡張</span>
+              <p>VS Code等で使えるAI補完。エージェントモードで指示ベースの開発も可能に。</p>
+            </div>
+            <div class="tool-item">
+              <h4>Bolt / Lovable</h4>
+              <span class="tool-tag" style="background:#008800;">ブラウザ完結</span>
+              <p>ブラウザ上で指示するだけでWebアプリが生成される。環境構築不要で最も手軽。</p>
+            </div>
+            <div class="tool-item">
+              <h4>Replit Agent</h4>
+              <span class="tool-tag" style="background:#008888;">ブラウザ完結</span>
+              <p>オンライン開発環境。自然言語で指示するとアプリを自動構築し、そのままデプロイできる。</p>
+            </div>
+            <div class="tool-item">
+              <h4>v0 by Vercel</h4>
+              <span class="tool-tag" style="background:#880088;">UI生成特化</span>
+              <p>UIデザインを言葉で伝えると、React/Tailwindのコンポーネントを生成。フロントエンド特化。</p>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <div class="tip-box-title"><span class="star-deco">&starf;</span> 初心者におすすめ！</div>
+            <p>環境構築なしで始められる <span class="text-green text-big">Bolt</span> や <span class="text-green text-big">Replit Agent</span> がおすすめです。慣れてきたら <span class="text-cyan text-big">Cursor</span> や <span class="text-cyan text-big">Claude Code</span> にステップアップしましょう。</p>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="step">
-          <h3>生成結果を確認し、修正を依頼する</h3>
-          <p>AIが生成したコードを動かしてみましょう。思った通りでなければ、<strong style="color:var(--neon-pink);">追加の指示</strong>を出して修正してもらいます。</p>
-          <div class="code-block">
-            <span class="prompt-label">&gt; FIX REQUEST:</span><br><br>
-            <span class="string">いい感じです！以下を修正してください：</span><br>
-            <span class="string">- ボタンをもう少し大きくして、間隔を空ける</span><br>
-            <span class="string">- 結果表示にアニメーションをつける</span><br>
-            <span class="string">- リセットボタンを追加する</span>
+    <hr class="rainbow-hr">
+
+    <!-- Getting Started -->
+    <section id="start">
+      <div class="content-box content-box-green">
+        <div class="content-box-title" style="background: linear-gradient(90deg, #006600, #00cc00, #006600); color: #ffff00;"><span class="arrow-deco" style="color:#fff;">&raquo;</span> はじめ方 &#x2014; 5つのステップ <span class="arrow-deco" style="color:#fff;">&laquo;</span></div>
+        <div class="content-box-body">
+          <p>実際にバイブコーディングで何かを作る流れを、順を追って解説します。</p>
+
+          <div class="step-box">
+            <p><span class="step-number">1</span><span class="step-title">作りたいものを決める</span></p>
+            <p>最初は小さなものでOKです。例：</p>
+            <ul style="margin-left: 2rem; margin-bottom: 0.5rem;">
+              <li class="text-green">じゃんけんゲーム</li>
+              <li class="text-green">ToDoリストアプリ</li>
+              <li class="text-green">自己紹介ページ</li>
+              <li class="text-green">カウントダウンタイマー</li>
+            </ul>
+            <p>完成形を頭の中でイメージできていると、AIへの指示がブレにくくなります。</p>
           </div>
-          <p>この「指示 → 確認 → 修正」のサイクルを繰り返して完成度を上げていきます。これがバイブコーディングの基本ループです。</p>
-        </div>
 
-        <div class="step">
-          <h3>完成・公開する</h3>
-          <p>満足できる形になったら公開しましょう。BoltやReplitならワンクリックでデプロイ可能です。Vercel や Netlify を使えば無料でWebサイトとして公開できます。</p>
-          <div class="warning">
-            <div class="warning-title">&gt; WARNING</div>
-            <p>AIが生成したコードは必ずしも完璧ではありません。公開前にセキュリティ面（個人情報の取り扱いなど）を確認しましょう。本番サービスとして運用する場合は、コードレビューを受けることをおすすめします。</p>
+          <div class="step-box">
+            <p><span class="step-number">2</span><span class="step-title">ツールを準備する</span></p>
+            <p>一番手軽な方法として、ブラウザで <span class="text-cyan text-big">Bolt.new</span> を開くだけでOKです。アカウント登録すればすぐ使えます。</p>
+            <p>ローカル環境を使いたい場合は、Cursorをダウンロードしてインストールしましょう。</p>
+          </div>
+
+          <div class="step-box">
+            <p><span class="step-number">3</span><span class="step-title">AIに最初の指示を出す</span></p>
+            <p>「プロンプト」と呼ばれる指示文をAIに送ります。<span class="text-pink text-big">日本語で具体的に書く</span>のがコツです。</p>
+            <div class="prompt-box">
+              <span class="prompt-label">&gt; あなたの指示:</span><br><br>
+              じゃんけんゲームをHTMLとJavaScriptで作ってください。<br>
+              - グー・チョキ・パーのボタンが3つある<br>
+              - ボタンを押すとコンピュータの手がランダムで決まる<br>
+              - 勝ち・負け・あいこの結果が画面に表示される<br>
+              - 勝敗の回数をカウントして表示する<br>
+              - デザインはシンプルでかわいい感じにする
+            </div>
+            <div class="tip-box">
+              <div class="tip-box-title"><span class="star-deco">&starf;</span> 良い指示のコツ</div>
+              <p>「何が」「どう動いて」「どう見えるか」を箇条書きで伝えると、AIが正確に理解してくれます。<span class="text-red">曖昧な指示は曖昧な結果を生みます。</span></p>
+            </div>
+          </div>
+
+          <div class="step-box">
+            <p><span class="step-number">4</span><span class="step-title">生成結果を確認し、修正を依頼する</span></p>
+            <p>AIが生成したコードを動かしてみましょう。思った通りでなければ、<span class="text-pink text-big">追加の指示</span>を出して修正してもらいます。</p>
+            <div class="prompt-box">
+              <span class="prompt-label">&gt; 修正の指示（例）:</span><br><br>
+              いい感じです！以下を修正してください：<br>
+              - ボタンをもう少し大きくして、間隔を空ける<br>
+              - 結果表示にアニメーションをつける<br>
+              - リセットボタンを追加する
+            </div>
+            <p>この<span class="text-yellow">「指示 → 確認 → 修正」のサイクル</span>を繰り返して完成度を上げていきます。これがバイブコーディングの基本ループです。</p>
+          </div>
+
+          <div class="step-box">
+            <p><span class="step-number">5</span><span class="step-title">完成・公開する</span></p>
+            <p>満足できる形になったら公開しましょう。BoltやReplitならワンクリックでデプロイ可能です。Vercel や Netlify を使えば無料でWebサイトとして公開できます。</p>
+            <div class="warning-box">
+              <div class="warning-box-title">&#x26A0; 注意</div>
+              <p>AIが生成したコードは必ずしも完璧ではありません。<span class="text-red">公開前にセキュリティ面（個人情報の取り扱いなど）を確認しましょう。</span>本番サービスとして運用する場合は、コードレビューを受けることをおすすめします。</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="rainbow-hr">
+
+    <!-- Practice -->
+    <section id="practice">
+      <div class="content-box content-box-red">
+        <div class="content-box-title" style="background: linear-gradient(90deg, #990000, #ff0000, #990000); color: #fff;"><span class="arrow-deco" style="color:#ffff00;">&raquo;</span> プロンプトの実践テクニック <span class="arrow-deco" style="color:#ffff00;">&laquo;</span></div>
+        <div class="content-box-body">
+
+          <div class="green-banner">&#x2776; 役割を与える</div>
+          <div class="prompt-box">
+            あなたは経験豊富なフロントエンドエンジニアです。<br>
+            以下の要件でReactアプリを作ってください。
+          </div>
+
+          <div class="green-banner">&#x2777; 段階的に指示する</div>
+          <p>一度に全部を頼むのではなく、機能ごとに分けて依頼すると精度が上がります。</p>
+          <div class="prompt-box">
+            <span style="color: #666;">// まず土台を作ってもらう</span><br>
+            「まずシンプルなToDoリストの基本機能だけ作って」<br><br>
+            <span style="color: #666;">// 次に機能を追加</span><br>
+            「完了したタスクを取り消し線で表示する機能を追加して」<br><br>
+            <span style="color: #666;">// さらにデザインを調整</span><br>
+            「全体をダークモードのデザインに変更して」
+          </div>
+
+          <div class="green-banner">&#x2778; エラーはそのまま貼る</div>
+          <p>エラーが出たら、エラーメッセージをそのままAIに貼り付けましょう。自分で解読する必要はありません。</p>
+          <div class="prompt-box">
+            <span class="prompt-label">&gt; あなた:</span><br>
+            以下のエラーが出ました。修正してください。<br><br>
+            <span class="error-text">TypeError: Cannot read properties of undefined (reading 'map')</span><br>
+            <span class="error-text">&nbsp; at App.jsx:15:22</span>
+          </div>
+
+          <div class="green-banner">&#x2779; 参考イメージを伝える</div>
+          <p>「〇〇みたいなデザイン」「△△のような動き」と既存サービスを参考に伝えると、AIが意図を汲み取りやすくなります。</p>
+          <div class="prompt-box">
+            Notionのようなシンプルでクリーンなデザインで、<br>
+            左側にサイドバー、右側にメインコンテンツという<br>
+            レイアウトにしてください。
+          </div>
+
+          <div class="green-banner">&#x277A; コンテキストを維持する</div>
+          <p>長い会話では、AIが以前の文脈を忘れることがあります。重要な前提は適宜繰り返しましょう。</p>
+          <div class="tip-box">
+            <div class="tip-box-title"><span class="star-deco">&starf;</span> 上級テクニック</div>
+            <p>プロジェクトのルールや設計方針をまとめたファイル（例：CONVENTIONS.md）を用意し、AIに毎回読み込ませると一貫性のある出力が得られます。Claude Codeでは<span class="text-cyan">CLAUDE.md</span>ファイルがこの役割を果たします。</p>
           </div>
         </div>
-
       </div>
-    </div>
-  </section>
+    </section>
 
-  <hr class="divider">
+    <hr class="rainbow-hr">
 
-  <!-- Practice -->
-  <section id="practice">
-    <div class="container">
-      <h2>&gt; プロンプトの実践テクニック</h2>
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="content-box">
+        <div class="content-box-title"><span class="arrow-deco">&raquo;</span> よくある質問 <span class="arrow-deco">&laquo;</span></div>
+        <div class="content-box-body">
 
-      <h3>&gt; 01: 役割を与える</h3>
-      <div class="code-block">
-        <span class="string">あなたは経験豊富なフロントエンドエンジニアです。</span><br>
-        <span class="string">以下の要件でReactアプリを作ってください。</span>
+          <details class="faq-item">
+            <summary>プログラミングの知識がゼロでも大丈夫？</summary>
+            <div class="faq-body">
+              <p>はい、大丈夫です。バイブコーディングの本質は「AIに伝える力」なので、コードが読めなくても始められます。ただし、続けていくうちに基礎知識があると修正指示の精度が上がるため、少しずつ学んでいくとより効果的です。</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>無料で使えるツールはある？</summary>
+            <div class="faq-body">
+              <p>あります。Bolt.newは無料枠があり、Replit Agentも無料プランがあります。Cursorも無料で始められます。本格的に使い込む場合は有料プラン（月$20前後）が必要になることが多いです。</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>バイブコーディングで作れないものは？</summary>
+            <div class="faq-body">
+              <p>現状では、大規模で複雑なシステム（銀行の基幹システム等）や、高いパフォーマンスが必要なもの（ゲームエンジン等）は難しいです。一方で、Webアプリ、モバイルアプリ、自動化スクリプト、データ分析ツールなどは十分作れます。</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>AIが間違ったコードを書いたらどうする？</summary>
+            <div class="faq-body">
+              <p>エラーメッセージをそのままAIに貼り付けて修正を依頼してください。それでも直らない場合は、別のアプローチを提案してもらうか、会話をリセットして最初からやり直すと解決することが多いです。</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>バイブコーディングを学ぶとプログラマーになれる？</summary>
+            <div class="faq-body">
+              <p>バイブコーディングは「ものを作る力」を身につける入口として最適です。そこからプログラミングの基礎を学んでいけば、プロの開発者を目指すことも十分可能です。まずは作る楽しさを体験し、必要に応じて知識を深めていくのがおすすめです。</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>作ったものを商用利用していい？</summary>
+            <div class="faq-body">
+              <p>基本的にはAIが生成したコードの商用利用は可能ですが、利用するAIツールの利用規約を必ず確認してください。また、生成されたコードが既存のオープンソースライセンスに抵触しないかも注意が必要です。</p>
+            </div>
+          </details>
+
+        </div>
       </div>
+    </section>
 
-      <h3>&gt; 02: 段階的に指示する</h3>
-      <p>一度に全部を頼むのではなく、機能ごとに分けて依頼すると精度が上がります。</p>
-      <div class="code-block">
-        <span class="comment">// まず土台を作ってもらう</span><br>
-        <span class="string">「まずシンプルなToDoリストの基本機能だけ作って」</span><br><br>
-        <span class="comment">// 次に機能を追加</span><br>
-        <span class="string">「完了したタスクを取り消し線で表示する機能を追加して」</span><br><br>
-        <span class="comment">// さらにデザインを調整</span><br>
-        <span class="string">「全体をダークモードのデザインに変更して」</span>
-      </div>
+  </div>
+</div>
 
-      <h3>&gt; 03: エラーはそのまま貼る</h3>
-      <p>エラーが出たら、エラーメッセージをそのままAIに貼り付けましょう。自分で解読する必要はありません。</p>
-      <div class="code-block">
-        <span class="prompt-label">&gt; YOU:</span><br>
-        <span class="string">以下のエラーが出ました。修正してください。</span><br><br>
-        <span style="color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink);">TypeError: Cannot read properties of undefined (reading 'map')</span><br>
-        <span style="color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink);">  at App.jsx:15:22</span>
-      </div>
-
-      <h3>&gt; 04: 参考イメージを伝える</h3>
-      <p>「〇〇みたいなデザイン」「△△のような動き」と既存サービスを参考に伝えると、AIが意図を汲み取りやすくなります。</p>
-      <div class="code-block">
-        <span class="string">Notionのようなシンプルでクリーンなデザインで、</span><br>
-        <span class="string">左側にサイドバー、右側にメインコンテンツという</span><br>
-        <span class="string">レイアウトにしてください。</span>
-      </div>
-
-      <h3>&gt; 05: コンテキストを維持する</h3>
-      <p>長い会話では、AIが以前の文脈を忘れることがあります。重要な前提は適宜繰り返しましょう。</p>
-      <div class="tip">
-        <div class="tip-title">&gt; ADVANCED TIP</div>
-        <p>プロジェクトのルールや設計方針をまとめたファイル（例：CONVENTIONS.md）を用意し、AIに毎回読み込ませると一貫性のある出力が得られます。Claude Codeでは<code style="color:var(--neon-cyan);">CLAUDE.md</code>ファイルがこの役割を果たします。</p>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- FAQ -->
-  <section id="faq">
-    <div class="container">
-      <h2>&gt; よくある質問</h2>
-
-      <details class="faq-item">
-        <summary>プログラミングの知識がゼロでも大丈夫？</summary>
-        <div class="faq-body">
-          <p>はい、大丈夫です。バイブコーディングの本質は「AIに伝える力」なので、コードが読めなくても始められます。ただし、続けていくうちに基礎知識があると修正指示の精度が上がるため、少しずつ学んでいくとより効果的です。</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary>無料で使えるツールはある？</summary>
-        <div class="faq-body">
-          <p>あります。Bolt.newは無料枠があり、Replit Agentも無料プランがあります。Cursorも無料で始められます。本格的に使い込む場合は有料プラン（月$20前後）が必要になることが多いです。</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary>バイブコーディングで作れないものは？</summary>
-        <div class="faq-body">
-          <p>現状では、大規模で複雑なシステム（銀行の基幹システム等）や、高いパフォーマンスが必要なもの（ゲームエンジン等）は難しいです。一方で、Webアプリ、モバイルアプリ、自動化スクリプト、データ分析ツールなどは十分作れます。</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary>AIが間違ったコードを書いたらどうする？</summary>
-        <div class="faq-body">
-          <p>エラーメッセージをそのままAIに貼り付けて修正を依頼してください。それでも直らない場合は、別のアプローチを提案してもらうか、会話をリセットして最初からやり直すと解決することが多いです。</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary>バイブコーディングを学ぶとプログラマーになれる？</summary>
-        <div class="faq-body">
-          <p>バイブコーディングは「ものを作る力」を身につける入口として最適です。そこからプログラミングの基礎を学んでいけば、プロの開発者を目指すことも十分可能です。まずは作る楽しさを体験し、必要に応じて知識を深めていくのがおすすめです。</p>
-        </div>
-      </details>
-
-      <details class="faq-item">
-        <summary>作ったものを商用利用していい？</summary>
-        <div class="faq-body">
-          <p>基本的にはAIが生成したコードの商用利用は可能ですが、利用するAIツールの利用規約を必ず確認してください。また、生成されたコードが既存のオープンソースライセンスに抵触しないかも注意が必要です。</p>
-        </div>
-      </details>
-    </div>
-  </section>
-
-</main>
+<hr class="rainbow-hr">
 
 <footer>
-  <div class="container">
-    <div class="footer-art">
-      ═══════════════════════════════════<br>
-      ★  V I B E  C O D I N G  L A B  ★<br>
-      ═══════════════════════════════════
-    </div>
-    <p>バイブコーディングをイチから学べるガイド</p>
-  </div>
+  <p class="text-pink">
+    <span class="star-deco">&starf;</span><span class="star-deco">&starf;</span><span class="star-deco">&starf;</span>
+    &nbsp; バイブコーディング入門 &nbsp;
+    <span class="star-deco">&starf;</span><span class="star-deco">&starf;</span><span class="star-deco">&starf;</span>
+  </p>
+  <div class="counter-img">VISITOR: 000482</div>
+  <p class="text-green" style="font-size:0.8rem; margin-top: 0.5rem;">
+    Since 2026.01.31 / このサイトはバイブコーディングで作られました
+  </p>
+  <p style="font-size:0.75rem; color: #666; margin-top: 0.25rem;">
+    &#x1F4E7; ご意見・ご感想はこちらまで
+  </p>
 </footer>
 
 </body>
