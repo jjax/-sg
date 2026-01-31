@@ -4,29 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>バイブコーディング入門 - イチから学べるガイド</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DotGothic16&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #6c5ce7;
-      --primary-light: #a29bfe;
-      --accent: #00cec9;
-      --bg: #0a0a1a;
-      --bg-card: #12122a;
-      --bg-card-hover: #1a1a3e;
-      --text: #e0e0f0;
-      --text-muted: #8888aa;
-      --border: #2a2a4a;
-      --success: #00b894;
-      --warning: #fdcb6e;
+      --neon-pink: #ff2d95;
+      --neon-cyan: #0ff;
+      --neon-yellow: #ffe600;
+      --neon-green: #39ff14;
+      --neon-orange: #ff6600;
+      --bg: #0a0014;
+      --bg-card: #110022;
+      --bg-card-hover: #1a0033;
+      --text: #e0d0ff;
+      --text-muted: #9980cc;
+      --border: #3a1a6a;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', sans-serif;
+      font-family: 'DotGothic16', 'MS Gothic', monospace;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.8;
+      line-height: 2;
+      position: relative;
     }
+
+    /* CRT scanline overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.15) 0px,
+        rgba(0,0,0,0.15) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        linear-gradient(rgba(255,45,149,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,45,149,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Neon text glow utility */
+    .glow-pink { color: var(--neon-pink); text-shadow: 0 0 7px var(--neon-pink), 0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink); }
+    .glow-cyan { color: var(--neon-cyan); text-shadow: 0 0 7px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan); }
+    .glow-yellow { color: var(--neon-yellow); text-shadow: 0 0 7px var(--neon-yellow), 0 0 20px var(--neon-yellow); }
+    .glow-green { color: var(--neon-green); text-shadow: 0 0 7px var(--neon-green), 0 0 20px var(--neon-green); }
 
     /* Hero */
     .hero {
@@ -37,55 +81,111 @@
       justify-content: center;
       text-align: center;
       padding: 2rem;
-      background: radial-gradient(ellipse at 50% 0%, #1a1a4a 0%, var(--bg) 70%);
+      background:
+        radial-gradient(ellipse at 50% 80%, rgba(255,45,149,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 20%, rgba(0,255,255,0.08) 0%, transparent 50%),
+        var(--bg);
       position: relative;
       overflow: hidden;
     }
 
+    /* Retro sun */
     .hero::before {
       content: '';
       position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(108,92,231,0.15) 0%, transparent 70%);
-      top: -200px;
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(180deg, var(--neon-yellow) 0%, var(--neon-pink) 50%, transparent 50%);
+      border-radius: 50%;
+      bottom: -100px;
       left: 50%;
       transform: translateX(-50%);
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    /* Horizon grid lines */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 18px,
+          rgba(255,45,149,0.15) 18px,
+          rgba(255,45,149,0.15) 19px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 60px,
+          rgba(0,255,255,0.08) 60px,
+          rgba(0,255,255,0.08) 61px
+        );
+      transform: perspective(200px) rotateX(40deg);
+      transform-origin: bottom;
       pointer-events: none;
     }
 
     .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--primary-light), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 1rem;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1.5rem, 5vw, 3rem);
+      color: var(--neon-cyan);
+      text-shadow:
+        0 0 10px var(--neon-cyan),
+        0 0 30px var(--neon-cyan),
+        0 0 60px var(--neon-cyan),
+        0 0 100px rgba(0,255,255,0.3);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+      position: relative;
+      z-index: 1;
+      animation: flicker 4s infinite;
     }
 
-    .hero p {
-      font-size: 1.25rem;
+    @keyframes flicker {
+      0%, 95%, 100% { opacity: 1; }
+      96% { opacity: 0.8; }
+      97% { opacity: 1; }
+      98% { opacity: 0.7; }
+      99% { opacity: 1; }
+    }
+
+    .hero .subtitle {
+      font-size: 1rem;
       color: var(--text-muted);
       max-width: 600px;
       margin-bottom: 2.5rem;
+      position: relative;
+      z-index: 1;
     }
 
     .cta-btn {
+      font-family: 'Press Start 2P', monospace;
       display: inline-block;
-      padding: 1rem 2.5rem;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      color: #fff;
+      padding: 1rem 2rem;
+      background: transparent;
+      color: var(--neon-pink);
       text-decoration: none;
-      border-radius: 50px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      transition: transform 0.2s, box-shadow 0.2s;
+      border: 3px solid var(--neon-pink);
+      font-size: 0.85rem;
+      transition: all 0.3s;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 10px var(--neon-pink);
+      box-shadow: 0 0 10px var(--neon-pink), inset 0 0 10px rgba(255,45,149,0.1);
     }
 
     .cta-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(108,92,231,0.4);
+      background: var(--neon-pink);
+      color: #000;
+      text-shadow: none;
+      box-shadow: 0 0 30px var(--neon-pink), 0 0 60px rgba(255,45,149,0.3);
     }
 
     /* Navigation */
@@ -93,36 +193,41 @@
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(10,10,26,0.9);
-      backdrop-filter: blur(10px);
-      z-index: 100;
-      border-bottom: 1px solid var(--border);
+      background: rgba(10,0,20,0.92);
+      z-index: 1000;
+      border-bottom: 2px solid var(--neon-pink);
+      box-shadow: 0 2px 20px rgba(255,45,149,0.3);
     }
 
     nav .nav-inner {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 0.75rem 1.5rem;
+      padding: 0.6rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     nav .logo {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--primary-light);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.7rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan);
     }
 
     nav a {
-      color: var(--text-muted);
+      color: var(--neon-pink);
       text-decoration: none;
       margin-left: 1.5rem;
-      font-size: 0.9rem;
-      transition: color 0.2s;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+      text-shadow: 0 0 5px rgba(255,45,149,0.5);
     }
 
-    nav a:hover { color: var(--accent); }
+    nav a:hover {
+      color: var(--neon-cyan);
+      text-shadow: 0 0 10px var(--neon-cyan);
+    }
 
     .nav-links { display: flex; align-items: center; }
 
@@ -138,17 +243,21 @@
     }
 
     section h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: var(--primary-light);
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      margin-bottom: 1.5rem;
+      color: var(--neon-pink);
+      text-shadow: 0 0 10px var(--neon-pink), 0 0 30px var(--neon-pink);
+      line-height: 2.2;
     }
 
     section h3 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin: 2rem 0 0.75rem;
-      color: var(--accent);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.85rem;
+      margin: 2.5rem 0 1rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 8px var(--neon-cyan);
+      line-height: 2;
     }
 
     section p, section li {
@@ -158,26 +267,28 @@
 
     .divider {
       border: none;
-      border-top: 1px solid var(--border);
+      border-top: 2px dashed var(--border);
       margin: 0;
+      opacity: 0.5;
     }
 
     /* What is section */
     .what-is {
       background: var(--bg-card);
-      border-radius: 16px;
       padding: 2.5rem;
       margin-top: 2rem;
-      border: 1px solid var(--border);
+      border: 2px solid var(--neon-pink);
+      box-shadow: 0 0 15px rgba(255,45,149,0.2), inset 0 0 30px rgba(255,45,149,0.03);
     }
 
     .what-is blockquote {
-      border-left: 4px solid var(--accent);
+      border-left: 4px solid var(--neon-yellow);
       padding-left: 1.25rem;
       margin: 1.5rem 0;
       font-style: italic;
-      color: var(--text-muted);
-      font-size: 1.1rem;
+      color: var(--neon-yellow);
+      text-shadow: 0 0 5px rgba(255,230,0,0.3);
+      font-size: 1rem;
     }
 
     /* Steps */
@@ -187,30 +298,29 @@
 
     .step {
       background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      border: 2px solid var(--border);
       padding: 2rem 2.5rem;
       margin-bottom: 2rem;
       position: relative;
-      transition: border-color 0.3s, background 0.3s;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     .step:hover {
-      border-color: var(--primary);
-      background: var(--bg-card-hover);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 20px rgba(0,255,255,0.15);
     }
 
     .step::before {
       counter-increment: step;
-      content: 'STEP ' counter(step);
+      content: '[ STEP ' counter(step) ' ]';
+      font-family: 'Press Start 2P', monospace;
       display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      color: #fff;
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
+      font-size: 0.6rem;
+      color: var(--neon-green);
+      text-shadow: 0 0 8px var(--neon-green);
+      padding: 0.4rem 0.75rem;
+      border: 1px solid var(--neon-green);
+      box-shadow: 0 0 8px rgba(57,255,20,0.2);
       margin-bottom: 1rem;
     }
 
@@ -220,53 +330,58 @@
 
     /* Code blocks */
     .code-block {
-      background: #0d0d20;
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      background: #060010;
+      border: 1px solid var(--neon-green);
+      box-shadow: 0 0 8px rgba(57,255,20,0.15);
       padding: 1.25rem 1.5rem;
       margin: 1rem 0;
       overflow-x: auto;
-      font-family: 'SFMono-Regular', 'Fira Code', monospace;
-      font-size: 0.9rem;
-      line-height: 1.7;
-      color: #c8c8e8;
+      font-family: 'Press Start 2P', 'Courier New', monospace;
+      font-size: 0.65rem;
+      line-height: 2.5;
+      color: var(--neon-green);
+      text-shadow: 0 0 5px rgba(57,255,20,0.4);
     }
 
-    .code-block .comment { color: #5a5a8a; }
-    .code-block .keyword { color: var(--primary-light); }
-    .code-block .string { color: var(--accent); }
+    .code-block .comment { color: #555; text-shadow: none; }
+    .code-block .keyword { color: var(--neon-cyan); text-shadow: 0 0 5px rgba(0,255,255,0.3); }
+    .code-block .string { color: var(--neon-green); }
     .code-block .prompt-label {
-      color: var(--warning);
-      font-weight: 600;
+      color: var(--neon-yellow);
+      text-shadow: 0 0 5px rgba(255,230,0,0.4);
     }
 
     /* Tips */
     .tip {
-      background: rgba(0,206,201,0.08);
-      border-left: 4px solid var(--accent);
-      border-radius: 0 12px 12px 0;
+      background: rgba(0,255,255,0.05);
+      border: 1px solid var(--neon-cyan);
+      box-shadow: 0 0 10px rgba(0,255,255,0.1);
       padding: 1.25rem 1.5rem;
       margin: 1.5rem 0;
     }
 
     .tip-title {
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 8px var(--neon-cyan);
+      margin-bottom: 0.75rem;
     }
 
     .warning {
-      background: rgba(253,203,110,0.08);
-      border-left: 4px solid var(--warning);
-      border-radius: 0 12px 12px 0;
+      background: rgba(255,102,0,0.05);
+      border: 1px solid var(--neon-orange);
+      box-shadow: 0 0 10px rgba(255,102,0,0.1);
       padding: 1.25rem 1.5rem;
       margin: 1.5rem 0;
     }
 
     .warning-title {
-      font-weight: 700;
-      color: var(--warning);
-      margin-bottom: 0.5rem;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem;
+      color: var(--neon-orange);
+      text-shadow: 0 0 8px var(--neon-orange);
+      margin-bottom: 0.75rem;
     }
 
     /* Tools grid */
@@ -279,31 +394,33 @@
 
     .tool-card {
       background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      border: 2px solid var(--border);
       padding: 1.5rem;
-      transition: border-color 0.3s, transform 0.2s;
+      transition: all 0.3s;
     }
 
     .tool-card:hover {
-      border-color: var(--primary);
-      transform: translateY(-3px);
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 20px rgba(255,45,149,0.2);
     }
 
     .tool-card h4 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      color: var(--primary-light);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.65rem;
+      margin-bottom: 0.75rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 8px var(--neon-cyan);
+      line-height: 2;
     }
 
     .tool-card .tag {
       display: inline-block;
-      font-size: 0.7rem;
-      padding: 0.15rem 0.5rem;
-      border-radius: 10px;
-      background: rgba(108,92,231,0.2);
-      color: var(--primary-light);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid var(--neon-pink);
+      color: var(--neon-pink);
       margin-bottom: 0.75rem;
+      text-shadow: 0 0 5px rgba(255,45,149,0.3);
     }
 
     .tool-card p {
@@ -316,7 +433,7 @@
       width: 100%;
       border-collapse: collapse;
       margin: 1.5rem 0;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     .comparison th, .comparison td {
@@ -326,21 +443,22 @@
     }
 
     .comparison th {
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 0.85rem;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.55rem;
+      color: var(--neon-yellow);
+      text-shadow: 0 0 5px rgba(255,230,0,0.3);
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      line-height: 2.5;
     }
 
     .comparison td { color: var(--text); }
-    .comparison tr:hover td { background: rgba(108,92,231,0.05); }
+    .comparison tr:hover td { background: rgba(255,45,149,0.05); }
 
     /* FAQ */
     .faq-item {
       background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      border: 2px solid var(--border);
       margin-bottom: 1rem;
       overflow: hidden;
     }
@@ -354,17 +472,29 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      transition: color 0.2s;
+    }
+
+    .faq-item summary:hover {
+      color: var(--neon-cyan);
     }
 
     .faq-item summary::after {
-      content: '+';
-      font-size: 1.5rem;
-      color: var(--primary-light);
+      content: '>';
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.7rem;
+      color: var(--neon-pink);
+      text-shadow: 0 0 5px var(--neon-pink);
       transition: transform 0.2s;
     }
 
     .faq-item[open] summary::after {
-      transform: rotate(45deg);
+      transform: rotate(90deg);
+    }
+
+    .faq-item[open] {
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 10px rgba(255,45,149,0.15);
     }
 
     .faq-item .faq-body {
@@ -377,12 +507,45 @@
       text-align: center;
       padding: 3rem 1.5rem;
       color: var(--text-muted);
-      font-size: 0.85rem;
-      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      border-top: 2px solid var(--border);
+    }
+
+    footer .footer-art {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      color: var(--neon-pink);
+      text-shadow: 0 0 5px var(--neon-pink);
+      margin-bottom: 1rem;
+      line-height: 1.4;
+      letter-spacing: 0.2em;
     }
 
     /* Smooth scroll */
     html { scroll-behavior: smooth; }
+
+    /* Blinking cursor */
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .cursor-blink::after {
+      content: '_';
+      animation: blink 1s step-end infinite;
+      color: var(--neon-green);
+    }
+
+    /* Selection */
+    ::selection {
+      background: var(--neon-pink);
+      color: #000;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--neon-pink); }
 
     /* Responsive */
     @media (max-width: 640px) {
@@ -390,6 +553,7 @@
       .what-is { padding: 1.5rem; }
       .nav-links { display: none; }
       section { padding: 3rem 0; }
+      .code-block { font-size: 0.55rem; }
     }
   </style>
 </head>
@@ -397,7 +561,7 @@
 
 <nav>
   <div class="nav-inner">
-    <span class="logo">Vibe Coding Lab</span>
+    <span class="logo">VIBE CODING LAB</span>
     <div class="nav-links">
       <a href="#what">バイブコーディングとは</a>
       <a href="#start">はじめ方</a>
@@ -410,8 +574,8 @@
 
 <header class="hero">
   <h1>バイブコーディング入門</h1>
-  <p>AIに「やりたいこと」を伝えるだけでソフトウェアが作れる。プログラミング経験ゼロからでも始められる、新しいものづくりのガイド。</p>
-  <a href="#what" class="cta-btn">学びをはじめる</a>
+  <p class="subtitle">AIに「やりたいこと」を伝えるだけでソフトウェアが作れる。<br>プログラミング経験ゼロからでも始められる、新しいものづくりのガイド。</p>
+  <a href="#what" class="cta-btn">&gt; START LEARNING _</a>
 </header>
 
 <main>
@@ -419,18 +583,18 @@
   <!-- What is Vibe Coding -->
   <section id="what">
     <div class="container">
-      <h2>バイブコーディングとは？</h2>
+      <h2>&gt; バイブコーディングとは？</h2>
       <div class="what-is">
         <blockquote>
           「コードを書くのではなく、"雰囲気(vibe)" で伝えてAIに作ってもらう。」<br>
           — Andrej Karpathy（元Tesla AI責任者）が2025年に提唱
         </blockquote>
         <p>
-          バイブコーディング（Vibe Coding）とは、<strong>自然言語（日本語でOK）でAIに指示を出し、プログラムを自動生成してもらう開発スタイル</strong>です。
+          バイブコーディング（Vibe Coding）とは、<strong style="color:var(--neon-cyan);">自然言語（日本語でOK）でAIに指示を出し、プログラムを自動生成してもらう開発スタイル</strong>です。
           従来のプログラミングのように文法やアルゴリズムを覚える必要はなく、「何を作りたいか」を言葉で伝えることが最も重要なスキルになります。
         </p>
 
-        <h3>従来のプログラミングとの違い</h3>
+        <h3>&gt; 従来のプログラミングとの違い</h3>
         <table class="comparison">
           <thead>
             <tr>
@@ -471,7 +635,7 @@
   <!-- Tools -->
   <section id="tools">
     <div class="container">
-      <h2>使えるツール</h2>
+      <h2>&gt; 使えるツール</h2>
       <p>バイブコーディングに対応した主要ツールを紹介します。まずは1つ選んで試してみましょう。</p>
 
       <div class="tools-grid">
@@ -508,8 +672,8 @@
       </div>
 
       <div class="tip">
-        <div class="tip-title">初心者におすすめ</div>
-        <p>環境構築なしで始められる <strong>Bolt</strong> や <strong>Replit Agent</strong> がおすすめです。慣れてきたら <strong>Cursor</strong> や <strong>Claude Code</strong> にステップアップしましょう。</p>
+        <div class="tip-title">&gt; TIP: 初心者におすすめ</div>
+        <p>環境構築なしで始められる <strong style="color:var(--neon-cyan);">Bolt</strong> や <strong style="color:var(--neon-cyan);">Replit Agent</strong> がおすすめです。慣れてきたら <strong style="color:var(--neon-cyan);">Cursor</strong> や <strong style="color:var(--neon-cyan);">Claude Code</strong> にステップアップしましょう。</p>
       </div>
     </div>
   </section>
@@ -519,7 +683,7 @@
   <!-- Getting Started -->
   <section id="start">
     <div class="container">
-      <h2>はじめ方 — 5つのステップ</h2>
+      <h2>&gt; はじめ方 — 5つのステップ</h2>
       <p>実際にバイブコーディングで何かを作る流れを、順を追って解説します。</p>
 
       <div class="steps">
@@ -538,15 +702,15 @@
 
         <div class="step">
           <h3>ツールを準備する</h3>
-          <p>一番手軽な方法として、ブラウザで <strong>Bolt.new</strong> を開くだけでOKです。アカウント登録すればすぐ使えます。</p>
+          <p>一番手軽な方法として、ブラウザで <strong style="color:var(--neon-cyan);">Bolt.new</strong> を開くだけでOKです。アカウント登録すればすぐ使えます。</p>
           <p>ローカル環境を使いたい場合は、Cursorをダウンロードしてインストールしましょう。</p>
         </div>
 
         <div class="step">
           <h3>AIに最初の指示を出す</h3>
-          <p>「プロンプト」と呼ばれる指示文をAIに送ります。<strong>日本語で具体的に書く</strong>のがコツです。</p>
+          <p>「プロンプト」と呼ばれる指示文をAIに送ります。<strong style="color:var(--neon-pink);">日本語で具体的に書く</strong>のがコツです。</p>
           <div class="code-block">
-            <span class="prompt-label">あなたの指示:</span><br><br>
+            <span class="prompt-label">&gt; YOUR PROMPT:</span><br><br>
             <span class="string">じゃんけんゲームをHTMLとJavaScriptで作ってください。</span><br>
             <span class="string">- グー・チョキ・パーのボタンが3つある</span><br>
             <span class="string">- ボタンを押すとコンピュータの手がランダムで決まる</span><br>
@@ -555,16 +719,16 @@
             <span class="string">- デザインはシンプルでかわいい感じにする</span>
           </div>
           <div class="tip">
-            <div class="tip-title">良い指示のコツ</div>
+            <div class="tip-title">&gt; TIP: 良い指示のコツ</div>
             <p>「何が」「どう動いて」「どう見えるか」を箇条書きで伝えると、AIが正確に理解してくれます。曖昧な指示は曖昧な結果を生みます。</p>
           </div>
         </div>
 
         <div class="step">
           <h3>生成結果を確認し、修正を依頼する</h3>
-          <p>AIが生成したコードを動かしてみましょう。思った通りでなければ、<strong>追加の指示</strong>を出して修正してもらいます。</p>
+          <p>AIが生成したコードを動かしてみましょう。思った通りでなければ、<strong style="color:var(--neon-pink);">追加の指示</strong>を出して修正してもらいます。</p>
           <div class="code-block">
-            <span class="prompt-label">修正の指示（例）:</span><br><br>
+            <span class="prompt-label">&gt; FIX REQUEST:</span><br><br>
             <span class="string">いい感じです！以下を修正してください：</span><br>
             <span class="string">- ボタンをもう少し大きくして、間隔を空ける</span><br>
             <span class="string">- 結果表示にアニメーションをつける</span><br>
@@ -577,7 +741,7 @@
           <h3>完成・公開する</h3>
           <p>満足できる形になったら公開しましょう。BoltやReplitならワンクリックでデプロイ可能です。Vercel や Netlify を使えば無料でWebサイトとして公開できます。</p>
           <div class="warning">
-            <div class="warning-title">注意</div>
+            <div class="warning-title">&gt; WARNING</div>
             <p>AIが生成したコードは必ずしも完璧ではありません。公開前にセキュリティ面（個人情報の取り扱いなど）を確認しましょう。本番サービスとして運用する場合は、コードレビューを受けることをおすすめします。</p>
           </div>
         </div>
@@ -591,15 +755,15 @@
   <!-- Practice -->
   <section id="practice">
     <div class="container">
-      <h2>プロンプトの実践テクニック</h2>
+      <h2>&gt; プロンプトの実践テクニック</h2>
 
-      <h3>1. 役割を与える</h3>
+      <h3>&gt; 01: 役割を与える</h3>
       <div class="code-block">
         <span class="string">あなたは経験豊富なフロントエンドエンジニアです。</span><br>
         <span class="string">以下の要件でReactアプリを作ってください。</span>
       </div>
 
-      <h3>2. 段階的に指示する</h3>
+      <h3>&gt; 02: 段階的に指示する</h3>
       <p>一度に全部を頼むのではなく、機能ごとに分けて依頼すると精度が上がります。</p>
       <div class="code-block">
         <span class="comment">// まず土台を作ってもらう</span><br>
@@ -610,16 +774,16 @@
         <span class="string">「全体をダークモードのデザインに変更して」</span>
       </div>
 
-      <h3>3. エラーはそのまま貼る</h3>
+      <h3>&gt; 03: エラーはそのまま貼る</h3>
       <p>エラーが出たら、エラーメッセージをそのままAIに貼り付けましょう。自分で解読する必要はありません。</p>
       <div class="code-block">
-        <span class="prompt-label">あなた:</span><br>
+        <span class="prompt-label">&gt; YOU:</span><br>
         <span class="string">以下のエラーが出ました。修正してください。</span><br><br>
-        <span style="color: #ff6b6b;">TypeError: Cannot read properties of undefined (reading 'map')</span><br>
-        <span style="color: #ff6b6b;">  at App.jsx:15:22</span>
+        <span style="color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink);">TypeError: Cannot read properties of undefined (reading 'map')</span><br>
+        <span style="color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink);">  at App.jsx:15:22</span>
       </div>
 
-      <h3>4. 参考イメージを伝える</h3>
+      <h3>&gt; 04: 参考イメージを伝える</h3>
       <p>「〇〇みたいなデザイン」「△△のような動き」と既存サービスを参考に伝えると、AIが意図を汲み取りやすくなります。</p>
       <div class="code-block">
         <span class="string">Notionのようなシンプルでクリーンなデザインで、</span><br>
@@ -627,11 +791,11 @@
         <span class="string">レイアウトにしてください。</span>
       </div>
 
-      <h3>5. コンテキストを維持する</h3>
+      <h3>&gt; 05: コンテキストを維持する</h3>
       <p>長い会話では、AIが以前の文脈を忘れることがあります。重要な前提は適宜繰り返しましょう。</p>
       <div class="tip">
-        <div class="tip-title">上級テクニック</div>
-        <p>プロジェクトのルールや設計方針をまとめたファイル（例：CONVENTIONS.md）を用意し、AIに毎回読み込ませると一貫性のある出力が得られます。Claude Codeでは<code>CLAUDE.md</code>ファイルがこの役割を果たします。</p>
+        <div class="tip-title">&gt; ADVANCED TIP</div>
+        <p>プロジェクトのルールや設計方針をまとめたファイル（例：CONVENTIONS.md）を用意し、AIに毎回読み込ませると一貫性のある出力が得られます。Claude Codeでは<code style="color:var(--neon-cyan);">CLAUDE.md</code>ファイルがこの役割を果たします。</p>
       </div>
     </div>
   </section>
@@ -641,7 +805,7 @@
   <!-- FAQ -->
   <section id="faq">
     <div class="container">
-      <h2>よくある質問</h2>
+      <h2>&gt; よくある質問</h2>
 
       <details class="faq-item">
         <summary>プログラミングの知識がゼロでも大丈夫？</summary>
@@ -691,7 +855,12 @@
 
 <footer>
   <div class="container">
-    <p>Vibe Coding Lab — バイブコーディングをイチから学べるガイド</p>
+    <div class="footer-art">
+      ═══════════════════════════════════<br>
+      ★  V I B E  C O D I N G  L A B  ★<br>
+      ═══════════════════════════════════
+    </div>
+    <p>バイブコーディングをイチから学べるガイド</p>
   </div>
 </footer>
 
